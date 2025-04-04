@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import React from "react";
 import Breadcrumb from "../components/Breadcrumb";
-import "../assets/flower.css"; // Importing the CSS file for animation
+import "../assets/flower.css";
+import amanadefault from "../assets/amana-default.webp";
 
 const FlowerList = () => {
   const [flowers, setFlowers] = useState([]);
@@ -46,7 +47,7 @@ const FlowerList = () => {
   return (
     <>
       <Breadcrumb />
-      <div className="min-h-screen  flex flex-col items-center p-5 bg-[#2a734f]">
+      <div className="min-h-screen flex flex-col items-center p-5 bg-[#2a734f]">
         <h1 className="text-3xl text-white font-bold mb-4">Amana Flowers</h1>
         <div className="w-full max-w-2xl bg-white shadow-md rounded-lg p-5">
           {flowers.length === 0 ? (
@@ -56,26 +57,42 @@ const FlowerList = () => {
               {flowers.map((flower) => (
                 <li
                   key={flower._id}
-                  className="relative flex justify-between items-center p-3 bg-gray-50 rounded-lg shadow hover:bg-gray-200 transition duration-300 group"
+                  className="relative flex items-center space-x-4 p-3 bg-gray-50 rounded-lg shadow hover:bg-gray-200 transition duration-300 group"
                 >
-                  <span className="text-lg font-semibold">{flower.name}</span>
+                  {/* Flower Image */}
+                  <img
+                    src={
+                      flower.image
+                        ? `${import.meta.env.VITE_BACKEND_URL}${flower.image}`
+                        : amanadefault
+                    }
+                    alt={flower.name}
+                    className="w-16 h-16 object-cover rounded-md shadow-md"
+                  />
 
-                  <div className="relative flex items-center">
-                    <div
-                      className={`w-16 h-8 flex items-center rounded-full p-1 cursor-pointer transition-all ${
-                        flower.available ? "bg-[#208f58]" : "bg-[#f13536]"
-                      }`}
-                    >
+                  {/* Flower Name and Availability */}
+                  <div className="flex-1 flex justify-between items-center">
+                    <span className="text-lg font-semibold">{flower.name}</span>
+
+                    <div className="relative flex items-center">
                       <div
-                        className={`w-7 h-7 bg-gray-300 rounded-full shadow-md transform transition-all ${
-                          flower.available ? "translate-x-8" : "translate-x-0"
+                        className={`w-16 h-8 flex items-center rounded-full p-1 cursor-pointer transition-all ${
+                          flower.available ? "bg-[#208f58]" : "bg-[#f13536]"
                         }`}
-                      ></div>
-                    </div>
+                      >
+                        <div
+                          className={`w-7 h-7 bg-gray-300 rounded-full shadow-md transform transition-all ${
+                            flower.available ? "translate-x-8" : "translate-x-0"
+                          }`}
+                        ></div>
+                      </div>
 
-                    {/* Tooltip on the Right Side of the Switch */}
-                    <div className="absolute left-[120%] opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black text-white text-xs px-3 py-1 rounded-md shadow-md">
-                      {flower.available ? "Available" : "Unavailable"}
+                      {/* Tooltip on the Right Side of the Switch */}
+                      <div className="absolute left-[120%] opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black text-white text-xs px-3 py-1 rounded-md shadow-md">
+                        {flower.available
+                          ? "Flowers Available"
+                          : "Flowers Unavailable"}
+                      </div>
                     </div>
                   </div>
                 </li>
