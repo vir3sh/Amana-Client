@@ -61,13 +61,9 @@ const FlowerList = () => {
                 >
                   {/* Flower Image */}
                   <img
-                    src={
-                      flower.image
-                        ? `${import.meta.env.VITE_BACKEND_URL}${flower.image}`
-                        : amanadefault
-                    }
+                    src={flower.image ? flower.image : amanaDefault}
                     alt={flower.name}
-                    className="w-16 h-16 object-cover rounded-md shadow-md"
+                    className="w-16 h-16 object-cover rounded-md mr-3"
                   />
 
                   {/* Flower Name and Availability */}
