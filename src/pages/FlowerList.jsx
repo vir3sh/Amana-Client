@@ -8,6 +8,7 @@ import amanadefault from "../assets/amana-default.webp";
 const FlowerList = () => {
   const [flowers, setFlowers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState(null); // 🌸
 
   useEffect(() => {
     const fetchFlowers = async () => {
@@ -59,17 +60,18 @@ const FlowerList = () => {
                   key={flower._id}
                   className="relative flex items-center space-x-4 p-3 bg-gray-50 rounded-lg shadow hover:bg-gray-200 transition duration-300 group"
                 >
-                  {/* Flower Image */}
+                  {/* Flower Image - Click to view modal */}
                   <img
-                    src={flower.image ? flower.image : amanaDefault}
+                    src={flower.image ? flower.image : amanadefault}
                     alt={flower.name}
-                    className="w-16 h-16 object-cover rounded-md mr-3"
+                    className="w-16 h-16 object-cover rounded-md mr-3 cursor-pointer"
+                    onClick={() =>
+                      setSelectedImage(flower.image || amanadefault)
+                    }
                   />
 
-                  {/* Flower Name and Availability */}
                   <div className="flex-1 flex justify-between items-center">
                     <span className="text-lg font-semibold">{flower.name}</span>
-
                     <div className="relative flex items-center">
                       <div
                         className={`w-16 h-8 flex items-center rounded-full p-1 cursor-pointer transition-all ${
@@ -82,8 +84,6 @@ const FlowerList = () => {
                           }`}
                         ></div>
                       </div>
-
-                      {/* Tooltip on the Right Side of the Switch */}
                       <div className="absolute left-[120%] opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black text-white text-xs px-3 py-1 rounded-md shadow-md">
                         {flower.available
                           ? "Flowers Available"
@@ -97,6 +97,26 @@ const FlowerList = () => {
           )}
         </div>
       </div>
+
+      {selectedImage && (
+        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+          <div className="relative bg-white rounded-2xl shadow-2xl max-w-2xl w-[90%] p-6 animate-scaleIn">
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-3 right-3 text-gray-500 hover:text-red-500 transition text-2xl leading-none font-bold"
+              aria-label="Close"
+            >
+              &times;
+            </button>
+
+            <img
+              src={selectedImage}
+              alt="Flower"
+              className="w-full h-auto object-contain rounded-xl"
+            />
+          </div>
+        </div>
+      )}
     </>
   );
 };

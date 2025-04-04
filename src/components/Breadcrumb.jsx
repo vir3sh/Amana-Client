@@ -5,18 +5,16 @@ import amana from "../assets/AMAN.png";
 const Breadcrumb = () => {
   return (
     <div
-      className="w-full h-[453px] flex items-center justify-center bg-cover bg-center shadow-md"
+      className="w-full h-[250px] flex items-center justify-center bg-cover bg-center shadow-md"
       style={{
         backgroundImage: `url(${amanaflower})`,
-        backgroundSize: "cover", // Ensures full coverage
-        backgroundPosition: "center", // Centers the image
+        backgroundSize: "cover",
+        backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
-        width: "100%",
-        height: "453px",
       }}
     >
-      <div className=" px-6 py-3 rounded-lg ">
-        <img src={amana}></img>
+      <div className="px-6 py-3 rounded-lg">
+        <img src={amana} alt="Amana" className="h-[250px] object-contain" />
       </div>
     </div>
   );
